@@ -47,7 +47,7 @@ public class Regression {
 		File file1 = new File("breast-cancer-wisconsin.data");
 		int count = 0;
 		Scanner input1 = new Scanner(file1);
-		int missing = 0;
+		int missing = -1;
 		while (input1.hasNext()) {
 			String line = input1.nextLine();
 			List<String> data = Arrays.asList(line.split(","));
@@ -55,19 +55,16 @@ public class Regression {
 				missing = data.indexOf("?");
 			}
 			for (int i = 0; i < 9; i++) {
-                if (missing != i) {
-                	parameters[i][count] = Float.valueOf(data.get(i+1));
-                }
+				if (missing == i) {
+					parameters[missing][count] = -1.0f;
+				} else {
+
+					parameters[i][count] = Float.valueOf(data.get(i+1));
+				}
+				System.out.println(parameters[i][count]);
+
 			}
-			parameters[0][count] = Float.valueOf(data.get(1));
-			parameters[1][count] = Float.valueOf(data.get(2));
-			parameters[2][count] = Float.valueOf(data.get(3));
-			parameters[3][count] = Float.valueOf(data.get(4));
-			parameters[4][count] = Float.valueOf(data.get(5));
-			parameters[5][count] = Float.valueOf(data.get(6));
-			parameters[6][count] = Float.valueOf(data.get(7));
-			parameters[7][count] = Float.valueOf(data.get(8));
-			parameters[8][count] = Float.valueOf(data.get(9));
+            
 			count++;
 		}
 
