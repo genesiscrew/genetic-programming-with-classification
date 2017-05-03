@@ -23,7 +23,7 @@ public class Regression {
 		LoadData();
 		GPConfiguration config = new GPConfiguration();
 		config.setGPFitnessEvaluator(new DeltaGPFitnessEvaluator());
-		config.setMaxInitDepth(8);
+		config.setMaxInitDepth(2);
 		config.setMaxCrossoverDepth(4);
 		config.setPopulationSize(1000);
 		config.setSelectionMethod(new TournamentSelector(2));
@@ -36,7 +36,7 @@ public class Regression {
 
 		GPGenotype gptype = gp.create();
 		gptype.setVerboseOutput(true);
-		gptype.evolve(1200);
+		gptype.evolve(800);
 		gptype.outputSolution(gptype.getAllTimeBest());
 		// gp.showTree(gptype.getAllTimeBest(), "mathproblem_best.png");
 

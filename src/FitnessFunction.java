@@ -66,9 +66,7 @@ public class FitnessFunction extends GPFitnessFunction {
 	private double computeRawFitness(IGPProgram arg0) {
 		// TODO Auto-generated method stub
 
-		if (vx == null) {
-			System.out.println("shouldnt be here");
-		}
+
 		double error = 0.0f;
 		double hits1 = 0.0f;
 		double hits2 = 0.0f;
@@ -91,12 +89,15 @@ public class FitnessFunction extends GPFitnessFunction {
 
 				double result = arg0.execute_float(0, noargs);
 
+				int roundedresult = (int) Math.round(result);
+
+
 				// if result is more than 1 and class is 1 OR result is less
 				// than or equal to zero
-				if ((result >= 1 && classTypes[i] == 1)) {
+				if ((result > 0 && classTypes[i] == 1)) {
 					hits1 = hits1 + 1.0f;
 				}
-				if ( (result <= 0 && classTypes[i] == 0)) {
+				if ( (result < 0 && classTypes[i] == 0)) {
 					hits2 = hits2 + 1.0f;
 				}
 				/*
@@ -117,11 +118,18 @@ public class FitnessFunction extends GPFitnessFunction {
 
 		}
 
+
+
+
 		Double accuracy = ((hits1/236.0f)+(hits2/116.0f))/2.0f;
+		error = Math.abs(1.0f - accuracy);
 
 		if (error < 0.001) {
 			error = 0.0d;
 		}
+		//System.out.println("accuracy is: "+ hits1);
+		//System.out.println("accuracy is: "+ hits2);
+		
 
 		return error;
 	}
