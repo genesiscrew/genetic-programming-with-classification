@@ -16,7 +16,7 @@ import org.jgap.impl.WeightedRouletteSelector;
 public class Regression {
 	static Float[] x = new Float[20];
 	static Float[] y = new Float[20];
-	static Float[][] parameters = new Float[9][699];
+	static Float[][] parameters = new Float[10][352];
 	public static Variable vx;
 
 	public static void main(String[] args) throws Exception {
@@ -44,27 +44,33 @@ public class Regression {
 
 	private static void LoadData() throws FileNotFoundException {
 
-		File file1 = new File("breast-cancer-wisconsin.data");
+		File file1 = new File("training.txt");
 		int count = 0;
 		Scanner input1 = new Scanner(file1);
 		int missing = -1;
 		while (input1.hasNext()) {
 			String line = input1.nextLine();
-			List<String> data = Arrays.asList(line.split(","));
+			List<String> data = Arrays.asList(line.split("\t"));
 			if (data.contains("?")) {
-				missing = data.indexOf("?");
+				missing = data.indexOf("?")-1;
 			}
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < 10; i++) {
 				if (missing == i) {
 					parameters[missing][count] = -1.0f;
 				} else {
+					if (i < 9) {
+						parameters[i][count] = Float.valueOf(data.get(i+1));
 
-					parameters[i][count] = Float.valueOf(data.get(i+1));
+					} else {
+						Float classType = ((Float.valueOf(data.get(i + 1)) == 2) ? 1.0f : 0.0f);
+						parameters[i][count] = classType;
+					}
+
 				}
 				System.out.println(parameters[i][count]);
 
 			}
-            
+
 			count++;
 		}
 
