@@ -63,16 +63,16 @@ public class FitnessFunction extends GPFitnessFunction {
 		return computeRawFitness(arg0);
 	}
 
-	private double computeRawFitness(IGPProgram arg0) {
+	private Double computeRawFitness(IGPProgram arg0) {
 		// TODO Auto-generated method stub
 
-
 		double error = 0.0f;
-		double hits1 = 0.0f;
-		double hits2 = 0.0f;
+		float hits1 = 0.0f;
+		float hits2 = 0.0f;
+		float hits3 = 0.0f;
 		Object[] noargs = new Object[0];
 
-		for (int i = 0; i < 352; i++) {
+		for (int i = 0; i < 349; i++) {
 			CT.set(x1[i]);
 			USz.set(x2[i]);
 			UShp.set(x3[i]);
@@ -85,26 +85,30 @@ public class FitnessFunction extends GPFitnessFunction {
 			Random r = new Random();
 			Float b = r.nextFloat();
 			// bx.set(b);
+
 			try {
+				//System.out.println(x1[i] + " " + x2[i] + " " + x3[i] + " " + x4[i] + " " + x5[i] + " " + x6[i] + " "  + x7[i] +  " " + x8[i] + " " + x9[i] );
 
 				double result = arg0.execute_float(0, noargs);
 
 				int roundedresult = (int) Math.round(result);
 
-
 				// if result is more than 1 and class is 1 OR result is less
+
 				// than or equal to zero
-				if ((result > 0 && classTypes[i] == 1)) {
-					hits1 = hits1 + 1.0f;
+				//System.out.println(classTypes[10]);
+				//System.out.println(classTypes[i]);
+
+				if ((result <= 0 && classTypes[i] == 2.0f)) {
+					hits1+=1;
+
 				}
-				if ( (result < 0 && classTypes[i] == 0)) {
-					hits2 = hits2 + 1.0f;
+
+
+				else if (result > 0 && classTypes[i] == 4.0f) {
+					hits2+=1;
+
 				}
-				/*
-				 * error += Math.abs(result - y[i]);
-				 *
-				 * if (Double.isInfinite(error)) { return Double.MAX_VALUE; }
-				 */
 
 			}
 
@@ -118,10 +122,17 @@ public class FitnessFunction extends GPFitnessFunction {
 
 		}
 
+		// precision and recall rate
+		// float precision = hits1 / (hits1+ hits2);
+		// float recall = hits1/ (hits1 + hits3);
 
+		// use 0 if it's NaN
+		// precision = Float.isNaN(precision) ? 0 : precision;
+		// recall = Float.isNaN(recall) ? 0 : recall;
 
+		// return 100 * (2.0f * precision * recall) / (precision + recall);
 
-		Double accuracy = ((hits1/236.0f)+(hits2/116.0f))/2.0f;
+		Float accuracy = ((hits1/229.0f)+(hits2/120.0f))/2.0f;
 		error = Math.abs(1.0f - accuracy);
 
 		if (error < 0.001) {
@@ -129,7 +140,7 @@ public class FitnessFunction extends GPFitnessFunction {
 		}
 		//System.out.println("accuracy is: "+ hits1);
 		//System.out.println("accuracy is: "+ hits2);
-		
+
 
 		return error;
 	}

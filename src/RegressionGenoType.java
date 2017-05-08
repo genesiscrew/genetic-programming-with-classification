@@ -29,15 +29,15 @@ public class RegressionGenoType extends GPProblem {
 	}
 
 	public void setVariable() throws InvalidConfigurationException {
-		this.CT = Variable.create(getGPConfiguration(), "CT", CommandGene.FloatClass);
-		this.USz = Variable.create(getGPConfiguration(), "USz", CommandGene.FloatClass);
-		this.UShp = Variable.create(getGPConfiguration(), "UShp", CommandGene.FloatClass);
-		this.MA = Variable.create(getGPConfiguration(), "MA", CommandGene.FloatClass);
-		this.SESz = Variable.create(getGPConfiguration(), "SESz", CommandGene.FloatClass);
-		this.BN = Variable.create(getGPConfiguration(), "BN", CommandGene.FloatClass);
-		this.BC = Variable.create(getGPConfiguration(), "BC", CommandGene.FloatClass);
-		this.NN = Variable.create(getGPConfiguration(), "NN", CommandGene.FloatClass);
-		this.M = Variable.create(getGPConfiguration(), "M", CommandGene.FloatClass);
+		this.CT = Variable.create(getGPConfiguration(), "B2", CommandGene.FloatClass);
+		this.USz = Variable.create(getGPConfiguration(), "C2", CommandGene.FloatClass);
+		this.UShp = Variable.create(getGPConfiguration(), "D2", CommandGene.FloatClass);
+		this.MA = Variable.create(getGPConfiguration(), "E2", CommandGene.FloatClass);
+		this.SESz = Variable.create(getGPConfiguration(), "F2", CommandGene.FloatClass);
+		this.BN = Variable.create(getGPConfiguration(), "G2", CommandGene.FloatClass);
+		this.BC = Variable.create(getGPConfiguration(), "H2", CommandGene.FloatClass);
+		this.NN = Variable.create(getGPConfiguration(), "I2", CommandGene.FloatClass);
+		this.M = Variable.create(getGPConfiguration(), "J2", CommandGene.FloatClass);
 
 
 		// this.bx = Variable.create(getGPConfiguration(), "B",
@@ -109,7 +109,7 @@ public class RegressionGenoType extends GPProblem {
 
 		// TODO Auto-generated method stub
 
-		CommandGene[][] nodeSets = { { 
+		CommandGene[][] nodeSets = { {
 			 CT,
 			 USz,
 			 UShp,
@@ -119,12 +119,10 @@ public class RegressionGenoType extends GPProblem {
 			 BC,
 			 NN,
 			 M,
-			
-				// bx,
 			    new Multiply(a_conf, CommandGene.FloatClass),
-		        //new Multiply3(a_conf, CommandGene.FloatClass),
+		        new Multiply3(a_conf, CommandGene.FloatClass),
 		        new Divide(a_conf, CommandGene.FloatClass),
-		        new If(a_conf, CommandGene.FloatClass),
+		        new If(a_conf, CommandGene.BooleanClass),
 		       // new Sine(a_conf, CommandGene.FloatClass),
 		        //new Cosine(a_conf, CommandGene.FloatClass),
 		       // new Tangent(a_conf, CommandGene.FloatClass),
@@ -133,20 +131,21 @@ public class RegressionGenoType extends GPProblem {
 		        new Subtract(a_conf, CommandGene.FloatClass),
 		        //new Subtract(a_conf, CommandGene.FloatClass),
 		        new Add(a_conf, CommandGene.FloatClass),
-		        //new Add3(a_conf, CommandGene.FloatClass),
-		        //new Add4(a_conf, CommandGene.FloatClass),
-		        //new Pow(a_conf, CommandGene.FloatClass),
-		        //new Log(a_conf, CommandGene.FloatClass),
+		        new Add3(a_conf, CommandGene.FloatClass),
+		        new Add4(a_conf, CommandGene.FloatClass),
+		        new Pow(a_conf, CommandGene.FloatClass),
+		       // new Log(a_conf, CommandGene.FloatClass),
 		        //new Increment(a_conf, CommandGene.FloatClass),
-		       // new Round(a_conf, CommandGene.FloatClass),
-		        //new Abs(a_conf, CommandGene.FloatClass),
+		        //new Round(a_conf, CommandGene.FloatClass),
+		      //  new Abs(a_conf, CommandGene.FloatClass),
 		       // new Mean(a_conf, CommandGene.LongClass, 2, 0, 10),
 		       // new ArcCosine(a_conf, CommandGene.FloatClass),
 		       // new ArcSine(a_conf, CommandGene.FloatClass),
 		       // new ArcTangent(a_conf, CommandGene.FloatClass),
 				// Use terminal with possible value from 2.0 to 10.0
 				// decimal
-				new Terminal(a_conf, CommandGene.FloatClass, 0.0d, 0.5d, false),
+				new Terminal(a_conf, CommandGene.FloatClass, 0.0d, 10.0d, false),
+
 				} };
 		if (vx == null) {
 			System.out.println("vx is empty");
@@ -154,7 +153,7 @@ public class RegressionGenoType extends GPProblem {
 		} else {
 			System.out.println("vx is not empty");
 		}
-		return GPGenotype.randomInitialGenotype(a_conf, types, argTypes, nodeSets, 100, true);
+		return GPGenotype.randomInitialGenotype(a_conf, types, argTypes, nodeSets,559, true);
 	}
 
 }
